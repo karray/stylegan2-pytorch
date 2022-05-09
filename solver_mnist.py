@@ -294,7 +294,7 @@ def train(args, loader, generator, discriminator,mapping, encoder, g_optim, d_op
 
         # noise = mixing_noise(args.batch, args.latent, args.mixing, device)
         w_z = mapping(torch.randn(args.batch, args.latent, device=device))
-        fake_img = generator([w_z])
+        fake_img, _ = generator([w_z])
 
         # if args.augment:
         #     fake_img, _ = augment(fake_img, ada_aug_p)
