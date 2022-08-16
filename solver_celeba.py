@@ -452,7 +452,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="StyleGAN2 trainer")
 
-    # parser.add_argument("path", type=str, help="path to the lmdb dataset")
+    parser.add_argument("path", type=str, help="path to the dataset")
     parser.add_argument('--arch', type=str, default='stylegan2', help='model architectures (stylegan2 | swagan)')
     parser.add_argument(
         "--iter", type=int, default=800000, help="total training iterations"
@@ -676,7 +676,7 @@ if __name__ == "__main__":
     )
 
     # dataset = MultiResolutionDataset(args.path, transform, args.size)
-    dataset = ImageFolder('/mnt/hxstorage1/karjauv/Projects/StyleGAN2_encoder/data/celeba_hq/train', transform)
+    dataset = ImageFolder(args.path, transform)
 
     loader = data.DataLoader(
         dataset,
