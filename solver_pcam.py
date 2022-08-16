@@ -426,7 +426,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="StyleGAN2 trainer")
 
-    # parser.add_argument("path", type=str, help="path to the lmdb dataset")
+    parser.add_argument("--path", type=str, default='camelyonpatch_level_2_split_train_x.h5', help="path to the PCam HDF5 file")
     parser.add_argument('--arch', type=str, default='stylegan2', help='model architectures (stylegan2 | swagan)')
     parser.add_argument(
         "--iter", type=int, default=800000, help="total training iterations"
@@ -649,7 +649,9 @@ if __name__ == "__main__":
     #     ]
     # )
 
-    with h5py.File('/mnt/hxstorage1/karjauv/Projects/data/camelyonpatch_level_2_split_train_x.h5', 'r') as file:
+    with h5py.File(args.path, 'r') as file:
+        # crop center of size 32x32, since only this area contains a label
+        # and normalize to [-1, 1]
         x_train = (file['x'][:, 32:64, 32:64].astype(np.float32) - 127.5) / 127.5
 
     x_train = torch.from_numpy(np.moveaxis(x_train, -1, 1))
